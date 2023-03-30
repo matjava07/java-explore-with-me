@@ -237,11 +237,8 @@ public class EventServiceImpl implements EventService {
                 .limit(size)
                 .fetch();
 
-        for (Event event : events) {
-            String uri = String.format("/events/%s", event.getId());
-            client.hit(new StatsDtoInput(APP, uri, request.getRemoteAddr(),
-                    LocalDateTime.now().withNano(0)));
-        }
+        client.hit(new StatsDtoInput(APP, "/events", request.getRemoteAddr(),
+                LocalDateTime.now().withNano(0)));
 
         if (sort != null && sort.equals(Sort.VIEWS)) {
             return getEventShortDtoOutput(events)

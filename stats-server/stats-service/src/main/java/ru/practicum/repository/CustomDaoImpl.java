@@ -40,7 +40,7 @@ public class CustomDaoImpl implements CustomDao {
             for (int i = 0; i < uris.size(); i++) {
                 newUri.append("'%");
                 newUri.append(uris.get(i));
-                newUri.append("%'");
+                newUri.append("'");
                 if (i != uris.size() - 1) {
                     newUri.append(" or uri like ");
                 }
@@ -61,18 +61,6 @@ public class CustomDaoImpl implements CustomDao {
                         ") group by app, uri order by hits desc";
             }
             statsStorage = jdbcTemplate.query(sql, parameters, CustomDaoImpl::makeToStats);
-
-            if (uris.size() == 1 && statsStorage.size() > 1) {
-                Stats newStat = new Stats();
-                newStat.setApp(statsStorage.get(0).getApp());
-                newStat.setUri(uris.get(0));
-                Long hits = 0L;
-                for (Stats stats : statsStorage) {
-                    hits += stats.getHits();
-                }
-                newStat.setHits(hits);
-                statsStorage = List.of(newStat);
-            }
         }
         return statsStorage;
     }
