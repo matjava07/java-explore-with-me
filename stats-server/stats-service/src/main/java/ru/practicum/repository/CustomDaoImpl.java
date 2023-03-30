@@ -61,6 +61,18 @@ public class CustomDaoImpl implements CustomDao {
                         ") group by app, uri order by hits desc";
             }
             statsStorage = jdbcTemplate.query(sql, parameters, CustomDaoImpl::makeToStats);
+
+            if (uris.size() == 1 && statsStorage.size() > 1) {
+                Stats newStat = new Stats();
+                newStat.setApp(statsStorage.get(0).getApp());
+                newStat.setUri(uris.get(0));
+                Long hits = 0L;
+                for (int i = 0; i < statsStorage.size(); i++) {
+                    hits += statsStorage.get(i).getHits();
+                }
+                newStat.setHits(hits);
+                statsStorage = List.of(newStat);
+            }
         }
         return statsStorage;
     }
