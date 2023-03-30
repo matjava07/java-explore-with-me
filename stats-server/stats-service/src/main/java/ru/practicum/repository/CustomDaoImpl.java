@@ -67,8 +67,8 @@ public class CustomDaoImpl implements CustomDao {
                 newStat.setApp(statsStorage.get(0).getApp());
                 newStat.setUri(uris.get(0));
                 Long hits = 0L;
-                for (int i = 0; i < statsStorage.size(); i++) {
-                    hits += statsStorage.get(i).getHits();
+                for (Stats stats : statsStorage) {
+                    hits += stats.getHits();
                 }
                 newStat.setHits(hits);
                 statsStorage = List.of(newStat);
