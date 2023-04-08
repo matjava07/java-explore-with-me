@@ -1,6 +1,7 @@
 package ru.practicum.public_access.comments.dto;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.admin_access.users.dto.UserShortDto;
 
 @Getter
@@ -8,9 +9,10 @@ import ru.practicum.admin_access.users.dto.UserShortDto;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CommentDtoOutput {
 
-    private Long id;
-    private UserShortDto creator;
-    private String description;
+    Long id;
+    UserShortDto creator;
+    String description;
 }

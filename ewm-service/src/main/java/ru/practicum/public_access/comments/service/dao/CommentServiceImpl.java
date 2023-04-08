@@ -1,6 +1,8 @@
 package ru.practicum.public_access.comments.service.dao;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ru.practicum.admin_access.users.service.dal.UserService;
 import ru.practicum.exceptions.exception.InvalidRequestException;
@@ -18,11 +20,12 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class CommentServiceImpl implements CommentService {
 
-    private final CommentRepository repository;
-    private final UserService userService;
-    private final EventService eventService;
+    CommentRepository repository;
+    UserService userService;
+    EventService eventService;
 
     @Override
     public CommentDtoOutput create(Long userId, Long eventId, CommentDtoInput commentDtoInput) {
